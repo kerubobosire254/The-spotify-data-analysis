@@ -10,6 +10,11 @@ Instead of just showing what you listened to, it answers:
 Built with Python and Streamlit, it combines data engineering, behavioral analytics, and visualization to generate 
 interpretable listening archetypes.
 
+## 🌐 Live Demo
+
+Try the live app here:  
+👉 https://the-spotify-data-analysis-m6w3vxjncfcxyx8yaitjkb.streamlit.app/
+
 ## ❗ Problem
 
 Spotify provides raw listening history, but it lacks meaningful interpretation.
