@@ -92,16 +92,39 @@ with st.sidebar:
         accept_multiple_files=True
     )
 
+st.image('Spotify Snip.png')
 
 # ─── APP TITLE ───────────────────────────────────────────────────────────────
 st.title("🎵 Spotify Analytics App")
 
 st.markdown("""
-Analyze your Spotify listening habits,
-patterns, productivity hours, artist loyalty,
-taste evolution and more.
-""")
+### 🎧 Discover Your SpotifyDNA
 
+Dive deep into your listening behavior and uncover the patterns behind your music taste.
+
+Analyze:
+- 🎵 Listening habits & streaming trends
+- 🌙 Productivity and peak listening hours
+- 🧠 Listening personality & music archetypes
+- 🎤 Artist loyalty vs music exploration
+- 📈 Taste evolution over time
+- 🔥 Top artists, albums, and tracks
+- 🎶 Mood and listening consistency
+
+### 📥 How to Get Your Spotify Data
+
+1. Open Spotify
+2. Go to:
+   **Account → Privacy Settings**
+3. Scroll to:
+   **Download your data**
+4. Request your **Extended Streaming History**
+5. Spotify will email you your data when it's ready
+   (this may take a few days)
+6. Download the ZIP file
+7. Upload the JSON files here and let SpotifyDNA do the rest ✨
+
+""")
 
 # ─── DATA LOADING ────────────────────────────────────────────────────────────
 @st.cache_data
@@ -232,24 +255,6 @@ if df is not None and len(df) > 0:
         """, unsafe_allow_html=True)
 
 
-    # ─── HOURLY INSIGHT ───────────────────────────────────
-    st.markdown("### ⏰ When You Turn Into a Music Character")
-
-    hourly = df.groupby("hour")["minutes_played"].sum()
-    peak_hour = hourly.idxmax()
-
-    st.markdown(f"""
-    <div style="
-        background: linear-gradient(90deg, #a0c4ff, #ffb6c1);
-        padding: 18px;
-        border-radius: 18px;
-        color: white;
-        font-size: 16px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    ">
-    """)
-
-
     # ─── TASTE EVOLUTION─────────────────────
     st.markdown("### 📈 Your Taste Evolution (Top 5 Artists)")
 
@@ -347,8 +352,8 @@ if df is not None and len(df) > 0:
              "You wander through music like a city at 3am, always searching for that song that hits different."),
 
             (["💎 Loyalist", "🎯 Deep Listener"],
-              "The Obsessive Fan",
-              "You find your people and ride with them. When you love a song, you LOVE it, playlists on repeat."),
+             "The Obsessive Fan",
+             "You find your people and ride with them. When you love a song, you LOVE it, playlists on repeat."),
 
             (["🗺️ Explorer", "☀️ Day Listener"],
               "The Curated Optimist",
@@ -356,7 +361,7 @@ if df is not None and len(df) > 0:
               "Broad taste, bright energy, you probably have a playlist for every mood."),
 
             (["⚡ Picky Listener", "🗺️ Explorer"],
-             "The Taste Architect",
+              "The Taste Architect",
              "High standards, wide radar. "
              "You're curating the perfect soundtrack and you know instantly when something doesn't belong."),
 
@@ -386,16 +391,118 @@ if df is not None and len(df) > 0:
     results = generate_personality(df)
 
     st.markdown("### 🎵 Your Music DNA")
+    st.markdown("### 🎵 Your Music DNA")
+
+    import time 
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ANALYSIS LOADING
+    with st.spinner("🔍 Analyzing your listening behavior..."):
+        time.sleep(2)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+# ARCHETYPE
+    st.markdown(f"""
+    <div style="
+    background: linear-gradient(135deg, #1DB954, #121212);
+    padding: 40px;
+    border-radius: 30px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    text-align: center;
+    margin-bottom: 30px;
+    ">
+
+    <h3 style="
+    letter-spacing:2px;
+    color:#dcdcdc;
+    margin-bottom:10px;
+    ">
+    YOUR SPOTIFY DNA
+    </h3>
+
+    <h1 style="
+    font-size:50px;
+    margin-bottom:20px;
+    ">
+    {results["archetype"]}
+    </h1>
+
+    <p style="
+    font-size:20px;
+    line-height:1.8;
+    color:#e0e0e0;
+    max-width:700px;
+    margin:auto;
+    ">
+    {results["description"]}
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+# TRAITS
+    st.markdown("""
+    <h2 style='margin-bottom:20px;'>
+    🧠 Your Listening Traits
+    </h2>
+    """, unsafe_allow_html=True)
 
     st.write("**Traits:**")
     for t in results["traits"]:
         st.write(f"• {t}")
 
-    st.write("**Archetype:**")
-    st.write(results["archetype"])
+        st.markdown(f"""
+        <div style="
+        background-color:#181818;
+        padding:18px;
+        border-radius:18px;
+        margin-bottom:15px;
+        text-align:center;
+        color:white;
+        font-size:17px;
+        font-weight:600;
+        border:1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        ">
+        {t}
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.write("**Description:**")
-    st.write(results["description"])
+    st.markdown("<br>", unsafe_allow_html=True)
+
+# EXTRA INSIGHT 
+    st.markdown(f"""
+    <div style="
+    background-color:#111111;
+    padding:25px;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.08);
+    ">
+
+    <h3 style='color:white;'>
+    🎵 Personality Insight
+    </h3>
+
+    <p style="
+    color:#d3d3d3;
+    font-size:17px;
+    line-height:1.8;
+    ">
+    Your listening history suggests consistent behavioral patterns in how
+    you engage with music, from the artists you revisit to the hours you
+    listen most. Your SpotifyDNA reflects not just what you play,
+    but how you experience music emotionally and behaviorally.
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+ 
+    st.balloons()
+  
 
 else:
     st.warning("Upload your Spotify files to begin analysis")
