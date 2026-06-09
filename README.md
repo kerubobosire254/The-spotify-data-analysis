@@ -15,6 +15,11 @@ interpretable listening archetypes.
 Try the live app here:  
 👉 https://the-spotify-data-analysis-m6w3vxjncfcxyx8yaitjkb.streamlit.app/
 
+### Snippet of the app
+
+<img width="1346" height="581" alt="image" src="https://github.com/user-attachments/assets/dff4a50a-9058-4073-9b6a-de2c02a433ac" />
+
+
 ## ❗ Problem
 
 Spotify provides raw listening history, but it lacks meaningful interpretation.
