@@ -1,137 +1,144 @@
-# 🎧 SPOTIFY ANALYTICS APP
+# 🎧 SpotifyDNA — Listening Behavior Intelligence
 
-SpotifyDNA is a data analytics and behavioral profiling system that transforms raw Spotify streaming history into a 
-structured listening personality.
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![Plotly](https://img.shields.io/badge/Plotly-Interactive-3D4DB7?style=flat&logo=plotly&logoColor=white)](https://plotly.com)
 
-Instead of just showing what you listened to, it answers:
+---
 
-> *What kind of listener are you?*
+## The problem
 
-Built with Python and Streamlit, it combines data engineering, behavioral analytics, and visualization to generate 
-interpretable listening archetypes.
+Spotify knows everything about how you listen. You know almost nothing.
 
-## 🌐 Live Demo
+You get Wrapped once a year — a handful of top artists, a total minutes count, a vague "you're in the top 1% of listeners" badge. It's surface-level. It doesn't tell you *how* you listen: whether you're a loyal repeater or a chronic explorer, whether you commit to songs or scan through them, whether your late-night playlists are a ritual or random. The behavioral signal is there in your streaming history — Spotify just never surfaces it.
 
-Try the live app here:  
-👉 https://the-spotify-data-analysis-m6w3vxjncfcxyx8yaitjkb.streamlit.app/
+## The solution
 
-### Snippet of the app
+SpotifyDNA ingests your raw Spotify streaming export and runs it through a behavioral profiling engine. Instead of counts, it extracts *patterns*:
 
-<img width="1346" height="581" alt="image" src="https://github.com/user-attachments/assets/dff4a50a-9058-4073-9b6a-de2c02a433ac" />
+- **Skip behavior** — do you scan for the right vibe, or do you let songs play through?
+- **Artist loyalty** — are you a loyalist circling the same 5 artists, or an explorer constantly expanding?
+- **Time-of-day habits** — is music a morning ritual, a late-night companion, or background to your work hours?
+- **Listening depth** — what percentage of your plays are genuine listens vs. quick dismissals?
 
+These four signals combine into a listening archetype — *Midnight Voyager*, *The Devoted*, *Taste Architect* — with a description that reads like a personality profile, not a data summary. The kind of thing you actually recognise.
 
-## ❗ Problem
+---
 
-Spotify provides raw listening history, but it lacks meaningful interpretation.
+## How it works
 
-Users can see:
-- Songs played  
-- Artists listened to  
-- Timestamps and duration  
+```
+Raw Spotify JSON export  (StreamingHistory*.json)
+         │
+         ▼
+   Data cleaning pipeline
+   (dedup, parse timestamps, filter <5s plays, extract features)
+         │
+         ▼
+   Feature engineering
+   ┌─────────────────────────────────────────┐
+   │  Skip rate      → scanned vs committed  │
+   │  Artist diversity ratio → loyalty score │
+   │  Time-of-day windows → peak period      │
+   │  Long-listen % → depth score            │
+   └─────────────────────────────────────────┘
+         │
+         ▼
+   Archetype engine
+   (loyalty × peak time → named personality profile)
+         │
+         ▼
+   4-tab Streamlit dashboard
+   ┌──────────────┬──────────────┬──────────────┬──────────────┐
+   │   Overview   │   Behavior   │  Personality │   Raw Data   │
+   │  Heatmap     │  Top artists │  Archetype   │  Full log    │
+   │  Monthly vol │  Skip charts │  Trait pills │  200-row     │
+   │  Artist evo  │  Platform    │  Score cards │  preview     │
+   └──────────────┴──────────────┴──────────────┴──────────────┘
+```
 
-But cannot easily understand:
-- Their listening behavior patterns  
-- Whether they are consistent or exploratory listeners  
-- How their habits change over time  
-- Their listening identity  
+### Personality engine logic
 
-Raw data ≠ insight.
+The archetype is not a label — it's derived from two independent signals:
 
-## 💡 Solution
+| Signal | How it's computed | What it captures |
+|---|---|---|
+| **Loyalty score** | Unique artist count ÷ total streams | Explorer vs. Loyalist vs. Switcher |
+| **Listening depth** | % of plays > 2 minutes | Committed listener vs. scanner |
+| **Skip rate** | Skipped streams ÷ total streams | Intentionality |
+| **Peak time** | Total minutes across 4 time windows (morning / day / evening / night) | Listening context |
 
-SpotifyDNA converts raw streaming logs into behavioral intelligence through a structured pipeline:
+Loyalty score × peak time → archetype. Eight named archetypes, each with a behavioral description. The intersection is what makes it feel personal rather than generic.
 
-1. **Data Cleaning & Normalization**  
-   Standardizes Spotify streaming history into usable format
+---
 
-2. **Feature Engineering**  
-   Extracts behavioral signals:
-   - Skip rate  
-   - Listening duration  
-   - Artist diversity  
-   - Time-of-day patterns  
+## Features
 
-3. **Behavior Classification Engine**  
-   Translates features into interpretable traits:
-   - Explorer vs Loyalist  
-   - Deep vs Picky listener  
-   - Morning / Day / Night behavior  
+### Listening heatmap
+Hour × day-of-week grid showing listening intensity across the full year. Immediately surfaces whether someone is a commute listener, a night owl, or a weekend binge listener.
 
-4. **Personality Archetype Mapping**  
-   Combines traits into a final listening identity (e.g. *Night Owl Explorer*)
+### Behavioral analysis
+- Top artists and tracks ranked by total minutes (not just play count — a 30-second skip and a full listen aren't the same)
+- Skip rate by hour of day — colour-coded red/amber/green so the pattern is instant
+- Platform breakdown — Android, iOS, Web, Desktop
+- Day-of-week volume with weekend highlighting
 
-5. **Interactive Dashboard**  
-   Visualized using Streamlit + Plotly
+### Personality tab
+- Named archetype with a written behavioral profile
+- Three score cards: Listening Depth %, Explorer Score %, Peak Time
+- Methodology expander — transparent about exactly how each signal is computed
 
-## ✨ Features
+### Demo mode
+Fully functional without any upload. Ships with 1,800 synthetic streams drawn from a realistic artist pool (Burna Boy, Tems, Kendrick Lamar, Sauti Sol, Frank Ocean, and others), with hour-weighted timestamps and realistic skip/listen distributions. Every feature is demonstrable in under 30 seconds.
 
-### 📊 Listening Overview
-- Total streams analyzed  
-- Unique artists count  
-- Total listening time  
-- Top tracks and artists  
+---
 
-### ⚡ Behavioral Analysis
-- Skip rate detection  
-- Deep / Casual / Picky listener classification  
-- Engagement consistency  
+## Quickstart
 
-### 🌍 Exploration vs Loyalty Engine
-- Measures listening diversity  
-- Classifies user as Explorer or Loyalist  
+```bash
+git clone https://github.com/kerubobosire254/spotifydna.git
+cd spotifydna
+pip install streamlit pandas numpy plotly
+streamlit run app.py
+```
 
-### 🌙 Time-Based Profiling
-- Morning / Day / Night listening patterns  
-- Night Owl / Early Bird detection  
+To use your own data: go to **Spotify → Account → Privacy Settings → Download your data → Extended Streaming History**, then upload the `StreamingHistory*.json` files. Your data never leaves your browser session.
 
-### 🧬 Personality Engine
-Generates archetypes such as:
-- 🗺️ Explorer  
-- ⚡ Loyalist  
-- 🎯 Deep Listener  
-- ⚡ Picky Listener  
-- 🌙 Night Owl  
+---
 
-### 📈 Interactive Dashboard
-- Streamlit UI  
-- Plotly visualizations  
-- Clean KPI metrics  
+## Technical stack
 
-## 🧠 Key Insight
+| Layer | Technology |
+|---|---|
+| **Data pipeline** | pandas — dedup, timestamp parsing, feature extraction |
+| **Analytics** | NumPy — diversity ratio, skip rate, time-window aggregation |
+| **Charts** | Plotly — heatmap, bar, line, donut, all custom-styled |
+| **UI** | Streamlit — 4-tab layout, custom CSS design system (Syne + DM Sans) |
+| **Demo data** | NumPy random generator with hour-weighted distributions and realistic skip probabilities |
 
-SpotifyDNA doesn’t just visualize data — it interprets behavior from patterns in listening history.
+---
 
-It bridges:
-> raw data → behavioral signals → identity layer
+## Design decisions
 
+**Why minutes, not play count?** Play count treats a 10-second skip equally with a 4-minute full listen. Minutes listened is a far better signal of actual engagement — and it's what makes the loyalty and depth scores meaningful.
 
-## 🛠️ Tech Stack
+**Why named archetypes?** Pure stats (68% explorer score, 0.22 skip rate) don't mean anything to most people. A named archetype with a written description translates behavioral data into something recognisable. The goal is insight, not dashboards.
 
-- Python  
-- Pandas & NumPy  
-- Streamlit  
-- Plotly / Matplotlib / Seaborn  
-- JSON Spotify data
+**Why demo mode with realistic data?** The app has zero utility without data, and asking a recruiter to go export their Spotify history isn't reasonable. The demo mode uses a weighted synthetic dataset — Kenyan and global artists, realistic time distributions — so the full product is immediately explorable.
 
-## 🚀 How It Works
+---
 
-1. Upload Spotify streaming history (JSON/CSV)  
-2. Data is cleaned and standardized  
-3. Features are engineered  
-4. Listening personality is computed  
-5. Dashboard visualizes insights  
+## Author
 
-## 📌 Future Improvements
+**Kerubo Bosire**  
+BSc Actuarial Science (Upper Second Class Honours), JKUAT  
+Python & Data Science Instructor · Pension Analytics · ML Engineering
 
-- Spotify API integration for real-time data  
-- Advanced clustering-based behavior modeling  
-- Mood detection (energy, valence, tempo)  
-- Recommendation engine based on personality  
-- Social comparison between users  
-- Exportable Spotify Wrapped-style reports  
+[![GitHub](https://img.shields.io/badge/GitHub-kerubobosire254-181717?style=flat&logo=github)](https://github.com/kerubobosire254)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-kerubo--bosire-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/kerubo-bosire-364523283)
 
-## 🧑‍💻 Author
+---
 
-Built by **Kerubo Bosire**  
-Machine Learning | Data Science & Analytics | Actuarial Science background 
+> *SpotifyDNA is an independent project with no affiliation with Spotify AB. No audio data or personal listening history is stored, transmitted, or retained beyond the active browser session.*
+
 
