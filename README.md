@@ -40,25 +40,26 @@ No login. No uploading your private data to a stranger's app. Every chart is alr
 
 ## How It Works
 
-```
-Streaming history (JSON/CSV)
+Spotify Streaming History (JSON/CSV)
         ↓
-Clean & normalize
+Data Cleaning & Normalization
         ↓
-Engineer behavioral signals
-  skip rate · diversity · time-of-day patterns
+Feature Engineering
+  → Skip rate
+  → Listening duration
+  → Artist diversity
+  → Time-of-day distribution
         ↓
-Classify behavior
-  Explorer/Loyalist · Deep/Picky · Morning/Night
+Behavior Classification
+  → Explorer vs Loyalist
+  → Deep vs Picky listener
+  → Morning / Day / Night profile
         ↓
-Map to personality archetype
+Personality Archetype Mapping
+  → e.g. "Night Owl Explorer"
         ↓
-Dashboard
-```
+Interactive Dashboard (Streamlit + Plotly)
 
-No black-box model here — every classification is a rule you could trace by hand if you wanted to. That's intentional. The goal was to make behaviour legible, not to impress with a model nobody (including the listener) could explain.
-
----
 
 ## Tech Stack
 
@@ -68,12 +69,12 @@ Python · Pandas · NumPy · Streamlit · Plotly · Matplotlib · Seaborn
 
 ## What's Next
 
-- Spotify API integration, so it pulls live data instead of needing a manual export
-- Clustering-based behavior modeling — letting listener types emerge from the data instead of being predefined
-- Mood detection using audio features like energy and valence
-- Personality-based recommendations — taking the archetype and suggesting what to listen to next
-- Side-by-side comparison between two listeners' DNA
-- A shareable, exportable "Wrapped-style" report
+Spotify API integration — pulling live listening data directly instead of requiring a manual JSON export, removing the biggest friction point for real (non-demo) usage
+Clustering-based behaviour modeling — moving from rule-based archetypes to unsupervised clustering on the engineered features, letting listener types emerge from the data rather than being predefined
+Mood detection — incorporating audio features like energy, valence, and tempo (available via the Spotify API) to add an emotional dimension alongside the current behavioural one
+Personality-based recommendations — using the archetype as an input to suggest new artists or tracks, closing the loop from "here's who you are" to "here's what that suggests you'd like"
+Social comparison — letting two users compare listening DNA side by side, which turns a solo analytics tool into something inherently shareable
+Exportable Wrapped-style report — a shareable visual summary, since the format Spotify's own "Wrapped" popularised is exactly what this kind of personality and behaviour data is suited to present
 
 ---
 
