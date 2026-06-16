@@ -5,7 +5,10 @@
 
 **Live Demo:** https://the-spotify-data-analysis-m6w3vxjncfcxyx8yaitjkb.streamlit.app/
 
----
+### Snippet of the App
+
+<img width="1349" height="584" alt="image" src="https://github.com/user-attachments/assets/de8c7077-2eb9-4e83-9bf2-15d235328eba" />
+
 
 ## The Problem
 
