@@ -5,7 +5,7 @@
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-3D4DB7?style=flat&logo=plotly&logoColor=white)](https://plotly.com)
 
 ---
-
+Live Demo ; https://the-spotify-data-analysis-m6w3vxjncfcxyx8yaitjkb.streamlit.app/
 ## The problem
 
 Spotify knows everything about how you listen. You know almost nothing.
